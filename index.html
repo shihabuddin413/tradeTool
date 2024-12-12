@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+
+        #avgP, #tm{
+            background-color: blueviolet;
+            border-radius: 5px;
+            color: white;
+            padding: 8px;
+            font-style: bold;
+            font-size: 18px;
+        }
+        /* Reset table default styles */
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-family: 'Arial', sans-serif;
+        }
+
+        thead {
+        background-color: #3498db;
+        color: white;
+        }
+
+        th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+        background-color: #f1f1f1;
+        transition: background-color 0.3s ease;
+        }
+
+        /* Styling for the table header */
+        th {
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        }
+
+        /* Styling for table rows */
+        tbody tr {
+        background-color: #ffffff;
+        transition: background-color 0.3s ease;
+        }
+
+        /* Add a subtle border radius */
+        table, th, td {
+        border-radius: 8px;
+        overflow: hidden;
+        }
+
+        /* Zebra striping for the rows */
+        tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+        }
+
+        /* Table hover effect */
+        tbody tr:hover {
+        background-color: #e3e3e3;
+        }
+
+        td {
+        font-size: 14px;
+        }
+
+        /* Responsive design for smaller screens */
+    
+
+                /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Container for the section */
+        div {
+            width: 100%;
+            background-color: #f4f7fa;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Info section */
+        p {
+        font-size: 18px;
+        margin-bottom: 10px;
+        }
+
+        strong {
+        font-weight: bold;
+        }
+
+        span {
+            background-color: #9b59b6;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Input fields and button container */
+        input {
+            width: 100%!important;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+        border-color: #3498db;
+        }
+
+        button {
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+        background-color: #2980b9;
+        }
+
+        /* Add responsive styles for smaller screens */
+        @media (max-width: 600px) {
+        div {
+            width: 100%;
+            padding: 15px;
+        }
+
+        input {
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 14px;
+        }
+        }
+
+        h3{
+            margin-top: 30px;
+        }
+        #avgP, #tm{
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+        table {
+            width: 100%;
+            font-size: 12px;
+        }
+        th, td {
+            padding: 10px;
+        }
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h3>Avg. price - <p id="avgP">0</p></h3>
+        <h3>Total amount - <p id="tm">0</p></h3>
+    </div>
+
+    <div id = 'main'></div>
+
+    <div id = 'dataTable'>
+        <table id = 'data'>
+            <tr>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </table>
+    </div>
+
+
+    <script>
+        var avgPrice = 0;
+        var totalPrice = 0;
+        var totalAmnt = 0;
+        var totalQt = 0;
+
+        var avgPriceDisplay =  document.getElementById('avgP')
+        var totalAmntDisplay =  document.getElementById('tm')
+
+        
+        var addbtn = document.getElementById('addrow');
+
+        
+
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 1000000000);
+        }
+
+       
+        function calculateAvg(p, a){
+            return a/p ;
+        }
+    
+        function mainLoop (args) {
+
+            // event listener working
+
+            div = document.getElementById('main')
+            dataDisplay =  document.getElementById("data")
+            
+
+            let paragraph = document.createElement('p');
+
+            
+            // Create the first input for price
+            var priceInput = document.createElement('input');
+            priceInput.setAttribute('placeholder', 'price');
+            priceInput.setAttribute('type', 'text');
+            priceInput.setAttribute('id', 'def'+String(getRandomNumber()));
+
+            // Create the second input for amount (usdt)
+            var amountInput = document.createElement('input');
+            amountInput.setAttribute('placeholder', 'amount(usdt)');
+            amountInput.setAttribute('type', 'text');
+            amountInput.setAttribute('id', 'def'+String(getRandomNumber()));
+
+            // Create the remove button
+            let removeButton = document.createElement('input');
+            removeButton.setAttribute('type', 'button');
+            removeButton.setAttribute('value', 'update');
+            removeButton.setAttribute('class', 'removeBtn');
+
+            removeButton.addEventListener('click', () => {
+                let amnt = amountInput.value 
+                let price = priceInput.value
+
+                if (amnt && price){
+
+                    totalAmnt = totalAmnt + Number(amnt);
+                    totalPrice = totalPrice + Number(price);
+
+                    totalQt =  totalQt + (Number(amnt)/Number(price));
+
+                    avgPrice = (totalAmnt / totalQt).toFixed(2);
+
+                    avgPriceDisplay.innerHTML = String(avgPrice)
+                    totalAmntDisplay.innerHTML = String(totalAmnt)
+
+                    let dataRow =  document.createElement('tr');
+                    let dataRowPrice =  document.createElement('td');
+                    let dataRowAmnt =  document.createElement('td');
+                    let dataRowAct =  document.createElement('td');
+
+                    let btnRmv =  document.createElement('input');
+                    btnRmv.setAttribute('type', 'button');
+                    btnRmv.setAttribute('value', 'X');
+
+                    dataRowPrice.innerHTML = String(price);
+                    dataRowAmnt.innerHTML = String(amnt);
+
+                    dataRowAct.appendChild(btnRmv)
+
+                    dataRow.appendChild(dataRowPrice)
+                    dataRow.appendChild(dataRowAmnt)
+                    dataRow.appendChild(dataRowAct)
+
+                    dataDisplay.appendChild(dataRow)
+
+                    amountInput.value = "";
+
+                    priceInput.value = "";
+                    
+                }
+
+            });
+
+            // Append all elements to the paragraph
+            paragraph.appendChild(priceInput);
+            paragraph.appendChild(amountInput);
+            paragraph.appendChild(removeButton);
+
+            // Append the paragraph to the body or a specific container
+            div.appendChild(paragraph);
+
+
+            // alert('heloo');
+        }
+
+        mainLoop();
+        
+    </script>
+</body>
+</html>
