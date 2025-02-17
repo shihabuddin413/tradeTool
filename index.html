@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; text-align: center; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        input { margin: 5px; padding: 10px; width: calc(50% - 15px); border: 1px solid #ccc; border-radius: 4px; }
+        .button { margin: 5px; padding: 10px; cursor: pointer; background: #6200ea; color: white; border: none; border-radius: 4px; }
+        .entry { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; background: #fff; }
+        .delete-btn { background: none; border: none; cursor: pointer; color: red; }
+        .material-icons { vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>DCA Average Entry Calculator</h2>
+        <div id="entries">
+            <div class="entry">
+                <input type="number" placeholder="Price" class="price" oninput="calculateDCA()">
+                <input type="number" placeholder="Amount" class="amount" oninput="calculateDCA()">
+                <button class="delete-btn" onclick="deleteEntry(this)"><i class="material-icons">delete</i></button>
+            </div>
+        </div>
+        <button class="button" onclick="addEntry()">Add Entry</button>
+        <h3 id="result">Average Entry: </h3>
+    </div>
+
+    <script>
+        function addEntry() {
+            let div = document.createElement("div");
+            div.classList.add("entry");
+            div.innerHTML = '<input type="number" placeholder="Price" class="price" oninput="calculateDCA()"> <input type="number" placeholder="Amount" class="amount" oninput="calculateDCA()"> <button class="delete-btn" onclick="deleteEntry(this)"><i class="material-icons">delete</i></button>';
+            document.getElementById("entries").appendChild(div);
+        }
+
+        function deleteEntry(button) {
+            button.parentElement.remove();
+            calculateDCA();
+        }
+
+        function calculateDCA() {
+            let prices = document.querySelectorAll(".price");
+            let amounts = document.querySelectorAll(".amount");
+            let totalCost = 0, totalAmount = 0;
+            
+            for (let i = 0; i < prices.length; i++) {
+                let price = parseFloat(prices[i].value) || 0;
+                let amount = parseFloat(amounts[i].value) || 0;
+                totalCost += price * amount;
+                totalAmount += amount;
+            }
+            
+            let averageEntry = totalAmount ? (totalCost / totalAmount).toFixed(2) : 0;
+            document.getElementById("result").innerText = "Average Entry: " + averageEntry;
+        }
+    </script>
+</body>
+</html>
